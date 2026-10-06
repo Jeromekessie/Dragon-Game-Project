@@ -9,12 +9,7 @@ public interface IInteractable
 }
 public class InteractionSystem : MonoBehaviour
 {
-    /*
-    [SerializeField]
-    private float _castDistance = 5f;
-    [SerializeField]
-    private Vector3 _raycastOffset = new Vector3(0, 1f, 0);
-    */
+
 
     public Color hoverColor = Color.green;
     public float distance = 3f;
@@ -41,38 +36,27 @@ public class InteractionSystem : MonoBehaviour
                     r.material.color = hoverColor;
                 }
             }
-
-            // if press e {current.Interact();}
         }
         else
         {
             Clear();
         }
+        
     }
+    public void Interact()
+    {
 
+        if (current != null)
+        {
+            current.Interact();
+        }
+    }
     void Clear()
     {
-        if (current != null) current.OnHover();
+        if (current != null) current.OnHoverExit();
         if (r) r.material.color = originalColor;
         current = null;
         r = null;
     }
-    /*
-    private bool DoInteractionTest(out IInteractable interactable)
-    {
-        interactable = null;
-        Ray ray = new Ray(transform.position + _raycastOffset, transform.forward);
 
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, _castDistance))
-        {
-            interactable = hitInfo.collider.GetComponent<IInteractable>();
-
-            if (interactable != null)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-    */
 }
