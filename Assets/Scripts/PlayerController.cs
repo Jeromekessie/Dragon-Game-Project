@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
 
     public InputActionReference move;
     public InputActionReference interact;
+
+    public InteractionSystem interactSystem;
     void Start()
     {
        
@@ -42,8 +44,29 @@ public class PlayerController : MonoBehaviour
         {
             sr.flipX = false;
         }
-        
+
+
+
     }
+
+    private void OnEnable()
+    {
+        interact.action.performed += Interact;
+        interact.action.Enable();
+    }
+
+    private void OnDisable()
+    {
+        interact.action.performed -= Interact;
+        interact.action.Disable();
+    }
+
+    private void Interact(InputAction.CallbackContext context)
+    {
+        Debug.Log("Player pressed E!");
+        interactSystem.Interact();
+    }
+
     private void FixedUpdate()
     {
         rb.linearVelocity = new Vector3(moveDirection.x * moveSpeed, rb.linearVelocity.y, moveDirection.z * moveSpeed);
